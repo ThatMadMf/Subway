@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Subway.Classes {
-  class Schedule {
+   class Schedule {
     SubwayUnit _subwayUnit;
     CustomTime _arrivalTime;
 

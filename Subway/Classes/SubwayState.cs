@@ -9,10 +9,27 @@ using System.Drawing;
 using System.Threading;
 
 namespace Subway.Classes {
-   public class SubwayState {
-    CustomTime _currentTime;
+  class SubwayState {
 
+    CustomTime _currentTime;
+    List<Train> _trains;
+    List<Station> _stations;
+    List<List<State>> _globalSchedule;
+
+    public List<Station> Stations => _stations;
+    public List<Train> Trains => _trains;
     public CustomTime CurrentTime => _currentTime;
+    public List<List<State>> GlobalSchedule => _globalSchedule;
+
+    public SubwayState(int h, int m, List<Train> trains, List<Station> stations) {
+      _currentTime = new CustomTime {
+        hours = h,
+        minutes = m
+      };
+      _trains = trains;
+      _stations = stations;
+      _globalSchedule = new List<List<State>>(3);
+    }
 
     public string CurrentTimeString {
       get {
@@ -23,15 +40,33 @@ namespace Subway.Classes {
       }
     }
 
-    public SubwayState() {
-      _currentTime = new CustomTime {
-        hours = 8,
+    public void makeSchedule() {
+      CustomTime endTime = new CustomTime {
+        hours = 0,
         minutes = 0
       };
+      int count = 0;
+      foreach (Train train in _trains) {
+        _globalSchedule.Add(new List<State>());
+        endTime = train.StrartTime;
+        int i = 0;
+        int j = 1;
+        do {
+          State halt = new State(train, _stations[i], endTime, _stations[i].HaltTime, "halt");
+          State ontheway = new State(train, _stations[j], halt.UpTo, _stations[j].DistanceToStation, "ontheway");
+          _globalSchedule[count].Add(halt);
+          _globalSchedule[count].Add(ontheway);
+          endTime = ontheway.UpTo;
+          i = (i + 1) == _stations.Count ? 0 : i + 1;
+          j = (j + 1) == _stations.Count ? 0 : j + 1;
+        } while (endTime.hours >= 8);
+        count++;
+      }
+      Console.Write("F");
     }
 
     public void Next(SubwayField subwayField) {
-      ChangeTime();
+      ChangeTime(_currentTime);
       setLabel(subwayField);
     }
 
@@ -41,16 +76,16 @@ namespace Subway.Classes {
       }));
     }
 
-    private void ChangeTime() {
-      if (_currentTime.minutes + 1 < 60) {
-        _currentTime.minutes++;
+    public void ChangeTime(CustomTime time) {
+      if (time.minutes + 1 < 60) {
+        time.minutes++;
       } else {
-        if (_currentTime.hours + 1 < 24) {
-          _currentTime.hours++;
-          _currentTime.minutes = 0;
+        if (time.hours + 1 < 24) {
+          time.hours++;
+          time.minutes = 0;
         } else {
-          _currentTime.hours = 0;
-          _currentTime.minutes = 0;
+          time.hours = 0;
+          time.minutes = 0;
         }
       }
     }

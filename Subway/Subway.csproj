@@ -47,9 +47,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Schedule.cs" />
+    <Compile Include="Classes\State.cs" />
     <Compile Include="Classes\SubwayState.cs" />
     <Compile Include="Classes\SubwayUnit.cs" />
     <Compile Include="Classes\Station.cs" />
+    <Compile Include="Classes\Train.cs" />
     <Compile Include="Forms\SubwayField.cs">
       <SubType>Form</SubType>
     </Compile>

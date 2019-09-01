@@ -6,6 +6,21 @@ using System.Threading.Tasks;
 
 namespace Subway.Classes {
   abstract class SubwayUnit {
+
+    internal CustomTime ChangeTime(CustomTime currentTime, int time ) {
+      if (currentTime.minutes + time < 60) {
+        currentTime.minutes += time;
+      } else {
+        if (currentTime.hours + 1 < 24) {
+          currentTime.hours++;
+          currentTime.minutes = currentTime.minutes + time - 60;
+        } else {
+          currentTime.hours = 0;
+          currentTime.minutes = currentTime.minutes + time - 60;
+        }
+      }
+      return currentTime;
+    }
     //public abstract void GetCurrentState();
     //public abstract void NextState();
     //public abstract void Pause();
