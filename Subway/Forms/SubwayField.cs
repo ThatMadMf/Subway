@@ -14,31 +14,46 @@ namespace Subway.Forms {
   public partial class SubwayField : Form {
 
     SubwayState subway;
+    bool _settings;
+    bool _schedule;
+    bool _live;
 
     public SubwayField() {
       InitializeComponent();
+      
+      List<Train> trains = new List<Train>();
+      _settings = true;
+      _schedule = false;
+      _live = false;
+
+      SettingsUserControl settingsUserControl = new SettingsUserControl();
+      panel1.Controls.Add(settingsUserControl);
+      settingsUserControl.SubwayEvent += SettingsUserControl_SubwayEvent;
     }
 
+    private void SettingsUserControl_SubwayEvent(object sender, object e) {
+      panel1.Controls.Clear();
+      SubwayState subwayState = e as SubwayState;
+      ScheduleUserControl scheduleUserControl = new ScheduleUserControl(subwayState.getSchedule());
+      panel1.Controls.Add(scheduleUserControl);
+    }
+
+    //public void createSubway(List<Train> trains, List<Station> stations) {
+
+    //}
+
     public void Test() {
-      List<Station> stations = new List<Station>();
-      List<Train> trains = new List<Train>();
-
-      stations.Add(new Station("Pushkina", 10, 5));
-      stations.Add(new Station("Shevch", 5, 5));
-      stations.Add(new Station("Univ", 20, 5));
-      stations.Add(new Station("Narbut", 10, 10));
-      stations.Add(new Station("Hmeln", 30, 10));
-      stations.Add(new Station("Stalin", 5, 10));
-      stations.Add(new Station("Lenin", 20, 20));
-
-      trains.Add(new Train(13, 8, 0));
-      trains.Add(new Train(666, 8, 15));
-      trains.Add(new Train(69, 8, 30));
-
-      subway = new SubwayState(8, 0, trains, stations);
-      //Thread thread = new Thread(() => Call());
-      //thread.Start();
-      subway.makeSchedule();
+      while (true) {
+        var control = new SubwayUserControl();
+        if (panel1.InvokeRequired) {
+          panel1.Invoke(new MethodInvoker(delegate { panel1.Controls.Clear(); })); 
+          panel1.Invoke(new MethodInvoker(delegate { panel1.Controls.Add(control); }));
+        } else {
+          panel1.Controls.Clear();
+          panel1.Controls.Add(control);
+        }
+        Thread.Sleep(3000);
+      }
     }
 
     void Call() {
@@ -49,11 +64,28 @@ namespace Subway.Forms {
     }
 
     private void button1_Click(object sender, EventArgs e) {
-      Application.Exit();
+      Environment.Exit(200);
     }
 
     private void button2_Click(object sender, EventArgs e) {
-      Test();
+    }
+
+    private void settings_Click(object sender, EventArgs e) {
+      _settings = true;
+      _schedule = false;
+      _live = false;
+    }
+
+    private void schedule_Click(object sender, EventArgs e) {
+      _settings = false;
+      _schedule = true;
+      _live = false;
+    }
+
+    private void live_Click(object sender, EventArgs e) {
+      _settings = false;
+      _schedule = false;
+      _live = true;
     }
   }
 }

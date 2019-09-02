@@ -13,7 +13,7 @@ namespace Subway.Classes {
     CustomTime _from;
     CustomTime _upTo;
 
-    public string GetState => _state;
+    public string StringState => _state;
     public Train Train => _train;
     public Station Station => _station;
     public CustomTime From => _from;

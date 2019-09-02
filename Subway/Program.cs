@@ -8,10 +8,6 @@ using Subway.Classes;
 
 namespace Subway {
 
-  public struct CustomTime {
-    public int hours;
-    public int minutes;
-  }
   static class Program {
     /// <summary>
     /// The main entry point for the application.

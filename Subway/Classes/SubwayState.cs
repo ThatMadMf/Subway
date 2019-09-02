@@ -20,6 +20,7 @@ namespace Subway.Classes {
     public List<Train> Trains => _trains;
     public CustomTime CurrentTime => _currentTime;
     public List<List<State>> GlobalSchedule => _globalSchedule;
+    public SubwayState GetIt => this;
 
     public SubwayState(int h, int m, List<Train> trains, List<Station> stations) {
       _currentTime = new CustomTime {
@@ -29,16 +30,9 @@ namespace Subway.Classes {
       _trains = trains;
       _stations = stations;
       _globalSchedule = new List<List<State>>(3);
+      makeSchedule();
     }
 
-    public string CurrentTimeString {
-      get {
-        string h, m;
-        h = _currentTime.hours < 10 ? "0" + _currentTime.hours.ToString() : _currentTime.hours.ToString();
-        m = _currentTime.minutes < 10 ? "0" + _currentTime.minutes.ToString() : _currentTime.minutes.ToString();
-        return h + ": " + m;
-      }
-    }
 
     public void makeSchedule() {
       CustomTime endTime = new CustomTime {
@@ -62,21 +56,70 @@ namespace Subway.Classes {
         } while (endTime.hours >= 8);
         count++;
       }
-      Console.Write("F");
     }
 
     public void Next(SubwayField subwayField) {
-      ChangeTime(_currentTime);
+      _currentTime = ChangeTime(_currentTime);
       setLabel(subwayField);
     }
 
     public void setLabel(SubwayField subwayField) {
-      subwayField.currentTime.Invoke(new Action(() => {
-        subwayField.currentTime.Text = CurrentTimeString;
-      }));
+      try {
+        subwayField.currentTime.Invoke(new Action(() => {
+          subwayField.currentTime.Text = _currentTime.ToString();
+        }));
+      } catch (Exception e) {
+        Console.Write(e.Message);
+      }
     }
 
-    public void ChangeTime(CustomTime time) {
+    public Label setSingleLabel(Label label, Train train) {
+      try {
+        label.Invoke(new Action(() => {
+          label.Text = getState(train);
+        }));
+      } catch (Exception e) {
+        Console.Write(e.Message);
+      }
+      return label;
+    }
+
+
+    public string getState(Train train) {
+      int index = _globalSchedule.IndexOf(_globalSchedule.Find(x => x[0].Train.Number == train.Number));
+      var v = _globalSchedule[index].Find(x => x.From <= _currentTime && x.UpTo >= _currentTime);
+      if (v != null) {
+        string state = v.StringState == "ontheway" ? "On the way to " : v.StringState;
+        return  state + " " + v.Station.Name;
+      } else {
+        return "Train is not on the way yet";
+      }
+    }
+
+    public List<List<State>> getStates() {
+      List<List<State>> result = new List<List<State>>();
+      for(int i = 0; i < _globalSchedule.Count; i++) {
+        List<State> query = _globalSchedule[i].FindAll(x => x.From >= _currentTime || x.From>= CurrentTime && x.UpTo <= CurrentTime).GetRange(0, 10);
+        result.Add(query);
+      }
+      return result;
+    }
+
+    public List<List<State>> getSchedule() {
+      List<List<State>> result = new List<List<State>>();
+      foreach(var s in _stations) {
+        List<State> temp = new List<State>();
+        foreach(var t in _globalSchedule) {
+          temp.AddRange(t.FindAll(x => x.Station.Name == s.Name && x.StringState == "halt"));
+        }
+        temp = temp.OrderBy(o => o.From).ToList();
+        result.Add(temp);
+      }
+      return result;
+    }
+
+
+    public CustomTime ChangeTime(CustomTime time) {
       if (time.minutes + 1 < 60) {
         time.minutes++;
       } else {
@@ -88,6 +131,7 @@ namespace Subway.Classes {
           time.minutes = 0;
         }
       }
+      return time;
     }
   }
 }
