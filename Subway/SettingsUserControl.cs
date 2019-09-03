@@ -46,7 +46,7 @@ namespace Subway {
         };
         TextBox textBox3 = new TextBox {
           Location = new Point(555, 30 + (i + 1) * 30),
-          Text = (30 + (i + 1) * 5).ToString(),
+          Text = (0 + (i + 1) * 5).ToString(),
           Name = "trainTimeM" + i,
           Height = 20,
           Width = 50

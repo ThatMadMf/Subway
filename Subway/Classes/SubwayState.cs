@@ -98,9 +98,14 @@ namespace Subway.Classes {
 
     public List<List<State>> getStates() {
       List<List<State>> result = new List<List<State>>();
-      for(int i = 0; i < _globalSchedule.Count; i++) {
-        List<State> query = _globalSchedule[i].FindAll(x => x.From >= _currentTime || x.From>= CurrentTime && x.UpTo <= CurrentTime).GetRange(0, 10);
-        result.Add(query);
+      foreach (var s in _stations) {
+        List<State> temp = new List<State>();
+        foreach (var t in _globalSchedule) {
+          temp.AddRange(t.FindAll(x => (x.From > CurrentTime && x.Station.Name == s.Name && x.StringState == "halt") 
+          || (x.From <= CurrentTime && x.UpTo >= CurrentTime && x.Station.Name == s.Name && x.StringState == "halt")));
+        }
+        temp = temp.OrderBy(o => o.From).ToList();
+        result.Add(temp);
       }
       return result;
     }

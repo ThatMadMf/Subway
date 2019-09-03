@@ -38,6 +38,14 @@ namespace Subway {
         return new CustomTime { hours = time1.hours - time2.hours - 1, minutes = time1.minutes - time2.minutes + 60 };
       }
     }
+
+    public static CustomTime operator + (CustomTime time, int m) {
+      if(time.minutes + m < 60) {
+        return new CustomTime { hours = time.hours, minutes = time.minutes + m };
+      } else {
+        return new CustomTime { hours = time.hours + 1, minutes = time.minutes + m - 60 };
+      }
+    }
       
 
     public override string ToString() {

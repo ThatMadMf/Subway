@@ -26,7 +26,6 @@
       this.currentTime = new System.Windows.Forms.Label();
       this.button1 = new System.Windows.Forms.Button();
       this.panel1 = new System.Windows.Forms.Panel();
-      this.settings = new System.Windows.Forms.Button();
       this.schedule = new System.Windows.Forms.Button();
       this.live = new System.Windows.Forms.Button();
       this.SuspendLayout();
@@ -57,19 +56,9 @@
       this.panel1.Size = new System.Drawing.Size(1100, 400);
       this.panel1.TabIndex = 6;
       // 
-      // settings
-      // 
-      this.settings.Location = new System.Drawing.Point(0, 438);
-      this.settings.Name = "settings";
-      this.settings.Size = new System.Drawing.Size(77, 26);
-      this.settings.TabIndex = 7;
-      this.settings.Text = "Settings";
-      this.settings.UseVisualStyleBackColor = true;
-      this.settings.Click += new System.EventHandler(this.settings_Click);
-      // 
       // schedule
       // 
-      this.schedule.Location = new System.Drawing.Point(83, 438);
+      this.schedule.Location = new System.Drawing.Point(0, 441);
       this.schedule.Name = "schedule";
       this.schedule.Size = new System.Drawing.Size(77, 26);
       this.schedule.TabIndex = 8;
@@ -79,7 +68,7 @@
       // 
       // live
       // 
-      this.live.Location = new System.Drawing.Point(166, 438);
+      this.live.Location = new System.Drawing.Point(83, 441);
       this.live.Name = "live";
       this.live.Size = new System.Drawing.Size(77, 26);
       this.live.TabIndex = 9;
@@ -94,7 +83,6 @@
       this.ClientSize = new System.Drawing.Size(1102, 473);
       this.Controls.Add(this.live);
       this.Controls.Add(this.schedule);
-      this.Controls.Add(this.settings);
       this.Controls.Add(this.panel1);
       this.Controls.Add(this.button1);
       this.Controls.Add(this.currentTime);
@@ -110,7 +98,6 @@
     public System.Windows.Forms.Label currentTime;
     private System.Windows.Forms.Button button1;
     private System.Windows.Forms.Panel panel1;
-    private System.Windows.Forms.Button settings;
     private System.Windows.Forms.Button schedule;
     private System.Windows.Forms.Button live;
   }
