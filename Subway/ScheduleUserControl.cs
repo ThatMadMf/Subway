@@ -13,16 +13,15 @@ namespace Subway {
   partial class ScheduleUserControl : UserControl {
     List<List<State>> states;
 
-    public ScheduleUserControl(List<List<State>> passStates) {
+    public ScheduleUserControl(List<Station>stations) {
       InitializeComponent();
-      states = passStates;
-      dataGridView1.ColumnCount = passStates[0].Count;
+      dataGridView1.ColumnCount = stations[0].Schedule.Count;
       dataGridView1.RowCount = 9;
-      for (int i = 0; i < passStates.Count; i++) {
-        var s = passStates[i];
-        dataGridView1.Rows[i].HeaderCell.Value = s[0].Station.Name;
+      for (int i = 0; i < stations.Count; i++) {
+        var s = stations[i].Schedule;
+        dataGridView1.Rows[i].HeaderCell.Value = stations[i].Name;
         for (int j = 0; j < s.Count; j++) {
-          dataGridView1.Rows[i].Cells[j].Value = s[j].From;
+          dataGridView1.Rows[i].Cells[j].Value = s[j].ArrivalTime;
         }
       }
 

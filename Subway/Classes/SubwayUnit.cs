@@ -21,8 +21,7 @@ namespace Subway.Classes {
       }
       return currentTime;
     }
-    //public abstract void GetCurrentState();
-    //public abstract void NextState();
-    //public abstract void Pause();
+
+    abstract public void makeSchedule<T>(List<T> types) where T : class;
   }
 }

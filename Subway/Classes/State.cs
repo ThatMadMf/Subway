@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Subway.Classes {
-  class State : SubwayUnit {
+  class State {
 
     string _state;
     Train _train;
@@ -23,7 +23,7 @@ namespace Subway.Classes {
       _train = train;
       _station = station;
       _from = currentTime;
-      _upTo = this.ChangeTime(currentTime, durationTime);
+      _upTo = (currentTime + durationTime);
       _state = state;
     }
   }

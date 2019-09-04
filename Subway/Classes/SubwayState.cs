@@ -53,7 +53,7 @@ namespace Subway.Classes {
           endTime = ontheway.UpTo;
           i = (i + 1) == _stations.Count ? 0 : i + 1;
           j = (j + 1) == _stations.Count ? 0 : j + 1;
-        } while (endTime.hours >= 8);
+        } while (endTime.hours < 24);
         count++;
       }
     }

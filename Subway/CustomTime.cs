@@ -10,10 +10,10 @@ namespace Subway {
     public int minutes;
 
     public int CompareTo (CustomTime time) {
-      if(hours * 60 + minutes > time.hours*60 + time.minutes) {
+      if((hours * 60 + minutes) > (time.hours*60 + time.minutes)) {
         return 1;
       }
-      if (hours * 60 + minutes == time.hours * 60 + time.minutes) {
+      if ((hours * 60 + minutes) == (time.hours * 60 + time.minutes)) {
         return 0;
       }
       return -1;
@@ -49,6 +49,8 @@ namespace Subway {
       
 
     public override string ToString() {
+      int hours = this.hours >= 24 ? this.hours - 24 : this.hours;
+      int minutes = this.minutes;
       string h, m;
       h = hours < 10 ? "0" + hours.ToString() : hours.ToString();
       m = minutes < 10 ? "0" + minutes.ToString() : minutes.ToString();

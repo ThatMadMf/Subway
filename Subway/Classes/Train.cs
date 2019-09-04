@@ -8,13 +8,12 @@ namespace Subway.Classes {
   class Train : SubwayUnit {
 
     int _number;
-    Schedule _closestStation;
     CustomTime _startTime;
-    bool _onTheWay;
-    List<Schedule> _completeSchedule;
+    List<Schedule> _schedule;
 
     public int Number => _number;
     public CustomTime StrartTime => _startTime;
+    public List<Schedule> Schedule => _schedule;
 
     public Train(int number, int h, int m) {
       _startTime = new CustomTime {
@@ -22,6 +21,19 @@ namespace Subway.Classes {
         minutes = m
       };
       _number = number;
+      _schedule = new List<Schedule>();
+    }
+
+    public override void makeSchedule<SubwayUnit>(List<SubwayUnit> subwayUnits) {
+      List<Station> stations = new List<Station>();
+      subwayUnits.ForEach(x => stations.Add(x as Station));
+      CustomTime endTime = _startTime;
+      do {
+        for(int i = 0; i < stations.Count; i++) {
+          _schedule.Add(new Schedule(stations[i], endTime));
+          endTime = endTime + stations[i].HaltTime;
+        }
+      } while (endTime.hours < 25);
     }
   }
 }

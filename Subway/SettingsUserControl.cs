@@ -59,7 +59,7 @@ namespace Subway {
 
 
     private void start_Click(object sender, EventArgs e) {
-      try {
+      //try {
         List<Train> trains = new List<Train>();
         List<Station> stations = new List<Station>();
         for (int i = 0; i < 9; i++) {
@@ -78,9 +78,9 @@ namespace Subway {
         if (handler != null) {
           handler(this, new SubwayState(8, 0, trains, stations));
         }
-      } catch (Exception ex) {
-        MessageBox.Show(ex.Message);
-      }
+      //} catch (Exception ex) {
+      //  MessageBox.Show(ex.Message);
+      //}
 
 
     }
