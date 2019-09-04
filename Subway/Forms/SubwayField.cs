@@ -51,9 +51,9 @@ namespace Subway.Forms {
      void Test(SubwayUserControl control) {
       while (_live) {
         if (panel1.InvokeRequired) {
-          panel1.Invoke(new MethodInvoker(delegate {control.render(subway.getStates(), subway.CurrentTime); })); 
+          panel1.Invoke(new MethodInvoker(delegate {control.render(subway.Stations, subway.CurrentTime); })); 
         } else {
-          control.render(subway.getStates(), subway.CurrentTime);
+          control.render(subway.Stations, subway.CurrentTime);
         }
         Thread.Sleep(1000);
       }

@@ -16,23 +16,25 @@ namespace Subway {
       InitializeComponent();
     }
 
-    public void render(List<List<State>> passStates, CustomTime currentTime) {
-      var states = passStates;
+    public void render(List<Station> stations, CustomTime currentTime) {
       dataGridView1.ColumnCount = 10;
       dataGridView1.RowCount = 9;
-      for (int i = 0; i < passStates.Count; i++) {
-        var t = passStates[i];
-        dataGridView1.Rows[i].HeaderCell.Value = t[0].Station.Name;
-        for (int j = 0; j < 10 && j < t.Count; j++) {
-          if (t[j].UpTo >= currentTime && t[j].From <= currentTime) {
-            dataGridView1.Rows[i].Cells[j].Value = t[j].Train.Number + t[j].StringState + "\n" + (t[j].From + t[j].Station.HaltTime - currentTime).ToString();
-          } else {
-            dataGridView1.Rows[i].Cells[j].Value = t[j].Train.Number + "arrives in\n" + (t[j].From - currentTime).ToString();
+      for (int i = 0; i < stations.Count; i++) {
+        var s = stations[i].Schedule;
+        dataGridView1.Rows[i].HeaderCell.Value = stations[i].Name;
+        int added = 0;
+        for (int j = 0; added < 10 && j < s.Count; j++) {
+          if (s[j].ArrivalTime <= currentTime && s[j].ArrivalTime + stations[i].HaltTime >= currentTime) {
+            dataGridView1.Rows[i].Cells[added].Value =
+              (s[j].SubwayUnit as Train).Number + " on stantion " + (s[j].ArrivalTime + stations[i].HaltTime - currentTime).ToString();
+            added++;
+          } else if (s[j].ArrivalTime > currentTime) {
+            dataGridView1.Rows[i].Cells[added].Value =
+              (s[j].SubwayUnit as Train).Number + " arrives in " + (s[j].ArrivalTime - currentTime).ToString();
+            added++;
           }
-
         }
       }
     }
-
   }
 }

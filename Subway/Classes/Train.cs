@@ -31,9 +31,9 @@ namespace Subway.Classes {
       do {
         for(int i = 0; i < stations.Count; i++) {
           _schedule.Add(new Schedule(stations[i], endTime));
-          endTime = endTime + stations[i].HaltTime;
+          endTime = endTime + stations[i].HaltTime + stations[i].DistanceToStation;
         }
-      } while (endTime.hours < 25);
+      } while (endTime.hours < 24);
     }
   }
 }
