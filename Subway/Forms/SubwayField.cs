@@ -14,10 +14,12 @@ namespace Subway.Forms {
   public partial class SubwayField : Form {
 
     SubwayState subway;
+    bool _setting;
     bool _schedule;
     bool _live;
     SettingsUserControl settingsUserControl;
     ScheduleUserControl scheduleUserControl;
+    SubwayUserControl subwayUserControl;
 
     public SubwayField() {
       InitializeComponent();
@@ -27,6 +29,8 @@ namespace Subway.Forms {
       _live = false;
 
       settingsUserControl = new SettingsUserControl();
+      subwayUserControl = new SubwayUserControl();
+      _setting = true;
       panel1.Controls.Add(settingsUserControl);
       settingsUserControl.SubwayEvent += SettingsUserControl_SubwayEvent;
     }
@@ -44,24 +48,21 @@ namespace Subway.Forms {
       scheduleUserControl = new ScheduleUserControl(subway.Stations);
       panel1.Controls.Add(scheduleUserControl);
       _schedule = true;
-      Thread thread = new Thread(() => Call());
+      Thread thread = new Thread(() => Call(subwayUserControl));
       thread.Start();
+      _setting = false;
     }
 
-     void Test(SubwayUserControl control) {
-      while (_live) {
-        if (panel1.InvokeRequired) {
-          panel1.Invoke(new MethodInvoker(delegate {control.render(subway.Stations, subway.CurrentTime); })); 
-        } else {
-          control.render(subway.Stations, subway.CurrentTime);
-        }
-        Thread.Sleep(1000);
-      }
-    }
-
-    void Call() {
+    void Call(SubwayUserControl control) {
       while (subway.CurrentTime.hours != 7) {
         subway.Next(this);
+        if (_live) {
+          if (panel1.InvokeRequired) {
+            panel1.Invoke(new MethodInvoker(delegate { control.render(subway.Stations, subway.CurrentTime); }));
+          } else {
+            control.render(subway.Stations, subway.CurrentTime);
+          }
+        }
         Thread.Sleep(1000);
       }
     }
@@ -71,25 +72,33 @@ namespace Subway.Forms {
     }
 
     private void schedule_Click(object sender, EventArgs e) {
-      panel1.Controls.Clear();
-      panel1.Controls.Add(scheduleUserControl);
-      _schedule = true;
-      _live = false;
+      if (!_setting) {
+        panel1.Controls.Clear();
+        panel1.Controls.Add(scheduleUserControl);
+        _schedule = true;
+        _live = false;
+      }
     }
 
     private void live_Click(object sender, EventArgs e) {
-      _schedule = false;
-      _live = true;
-      var control = new SubwayUserControl();
-      if (panel1.InvokeRequired) {
-        panel1.Invoke(new MethodInvoker(delegate { panel1.Controls.Clear(); }));
-        panel1.Invoke(new MethodInvoker(delegate { panel1.Controls.Add(control); }));
-      } else {
-        panel1.Controls.Clear();
-        panel1.Controls.Add(control);
+      if (!_setting) {
+        _schedule = false;
+        _live = true;
+        if (panel1.InvokeRequired) {
+          panel1.Invoke(new MethodInvoker(delegate { panel1.Controls.Clear(); }));
+          panel1.Invoke(new MethodInvoker(delegate { panel1.Controls.Add(subwayUserControl); }));
+        } else {
+          panel1.Controls.Clear();
+          panel1.Controls.Add(subwayUserControl);
+        }
       }
-      Thread thread = new Thread(() => Test(control));
-      thread.Start();
+    }
+
+    private void panel1_Resize(object sender, EventArgs e) {
+      //subwayUserControl.Size = panel1.Size;
+      //if(scheduleUserControl != null) {
+      //  scheduleUserControl.Size = panel1.Size;
+      //}
     }
   }
 }

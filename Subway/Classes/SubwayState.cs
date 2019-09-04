@@ -30,32 +30,6 @@ namespace Subway.Classes {
       _trains = trains;
       _stations = stations;
       _globalSchedule = new List<List<State>>(3);
-      makeSchedule();
-    }
-
-
-    public void makeSchedule() {
-      CustomTime endTime = new CustomTime {
-        hours = 0,
-        minutes = 0
-      };
-      int count = 0;
-      foreach (Train train in _trains) {
-        _globalSchedule.Add(new List<State>());
-        endTime = train.StrartTime;
-        int i = 0;
-        int j = 1;
-        do {
-          State halt = new State(train, _stations[i], endTime, _stations[i].HaltTime, "halt");
-          State ontheway = new State(train, _stations[j], halt.UpTo, _stations[j].DistanceToStation, "ontheway");
-          _globalSchedule[count].Add(halt);
-          _globalSchedule[count].Add(ontheway);
-          endTime = ontheway.UpTo;
-          i = (i + 1) == _stations.Count ? 0 : i + 1;
-          j = (j + 1) == _stations.Count ? 0 : j + 1;
-        } while (endTime.hours < 24);
-        count++;
-      }
     }
 
     public void Next(SubwayField subwayField) {
@@ -95,34 +69,6 @@ namespace Subway.Classes {
         return "Train is not on the way yet";
       }
     }
-
-    public List<List<State>> getStates() {
-      List<List<State>> result = new List<List<State>>();
-      foreach (var s in _stations) {
-        List<State> temp = new List<State>();
-        foreach (var t in _globalSchedule) {
-          temp.AddRange(t.FindAll(x => (x.From > CurrentTime && x.Station.Name == s.Name && x.StringState == "halt") 
-          || (x.From <= CurrentTime && x.UpTo >= CurrentTime && x.Station.Name == s.Name && x.StringState == "halt")));
-        }
-        temp = temp.OrderBy(o => o.From).ToList();
-        result.Add(temp);
-      }
-      return result;
-    }
-
-    public List<List<State>> getSchedule() {
-      List<List<State>> result = new List<List<State>>();
-      foreach(var s in _stations) {
-        List<State> temp = new List<State>();
-        foreach(var t in _globalSchedule) {
-          temp.AddRange(t.FindAll(x => x.Station.Name == s.Name && x.StringState == "halt"));
-        }
-        temp = temp.OrderBy(o => o.From).ToList();
-        result.Add(temp);
-      }
-      return result;
-    }
-
 
     public CustomTime ChangeTime(CustomTime time) {
       if (time.minutes + 1 < 60) {

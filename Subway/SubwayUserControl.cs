@@ -19,11 +19,13 @@ namespace Subway {
     public void render(List<Station> stations, CustomTime currentTime) {
       dataGridView1.ColumnCount = 10;
       dataGridView1.RowCount = 9;
+      dataGridView1.RowHeadersWidth = 150;
       for (int i = 0; i < stations.Count; i++) {
         var s = stations[i].Schedule;
         dataGridView1.Rows[i].HeaderCell.Value = stations[i].Name;
         int added = 0;
         for (int j = 0; added < 10 && j < s.Count; j++) {
+          dataGridView1.Columns[added].Width = 150;
           if (s[j].ArrivalTime <= currentTime && s[j].ArrivalTime + stations[i].HaltTime >= currentTime) {
             dataGridView1.Rows[i].Cells[added].Value =
               (s[j].SubwayUnit as Train).Number + " on stantion " + (s[j].ArrivalTime + stations[i].HaltTime - currentTime).ToString();

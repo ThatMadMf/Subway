@@ -41,26 +41,34 @@
       // 
       // button1
       // 
+      this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.button1.Location = new System.Drawing.Point(1025, 441);
       this.button1.Name = "button1";
       this.button1.Size = new System.Drawing.Size(75, 23);
       this.button1.TabIndex = 1;
-      this.button1.Text = "button1";
+      this.button1.Text = "Exit";
       this.button1.UseVisualStyleBackColor = true;
       this.button1.Click += new System.EventHandler(this.button1_Click);
       // 
       // panel1
       // 
-      this.panel1.Location = new System.Drawing.Point(0, 35);
+      this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.panel1.AutoSize = true;
+      this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+      this.panel1.Location = new System.Drawing.Point(12, 21);
       this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(1100, 400);
+      this.panel1.Size = new System.Drawing.Size(0, 0);
       this.panel1.TabIndex = 6;
+      this.panel1.Resize += new System.EventHandler(this.panel1_Resize);
       // 
       // schedule
       // 
+      this.schedule.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.schedule.Location = new System.Drawing.Point(0, 441);
       this.schedule.Name = "schedule";
-      this.schedule.Size = new System.Drawing.Size(77, 26);
+      this.schedule.Size = new System.Drawing.Size(93, 26);
       this.schedule.TabIndex = 8;
       this.schedule.Text = "Schedule";
       this.schedule.UseVisualStyleBackColor = true;
@@ -68,7 +76,8 @@
       // 
       // live
       // 
-      this.live.Location = new System.Drawing.Point(83, 441);
+      this.live.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+      this.live.Location = new System.Drawing.Point(99, 441);
       this.live.Name = "live";
       this.live.Size = new System.Drawing.Size(77, 26);
       this.live.TabIndex = 9;
