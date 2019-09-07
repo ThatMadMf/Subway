@@ -12,7 +12,7 @@ namespace Subway.Classes {
     int _haltTime;
     List<Schedule> _schedule;
 
-    
+
     public string Name => _name;
     public int DistanceToStation => _distanceToStation;
     public int HaltTime => _haltTime;
@@ -33,15 +33,22 @@ namespace Subway.Classes {
         List<Schedule> temp = new List<Schedule>();
         for (int i = 0; i < t.Schedule.Count; i++) {
           if ((t.Schedule[i].SubwayUnit as Station).Name == _name) {
-            if (t.Schedule[i].ArrivalTime.hours == 8 && t.Schedule[i].ArrivalTime.minutes == 5) {
-              Console.Write(t.Schedule[i].ArrivalTime);
-            }
             temp.Add(new Schedule(t, t.Schedule[i].ArrivalTime));
-        }
+          }
         }
         _schedule.AddRange(temp);
       }
       _schedule = _schedule.OrderBy(o => o.ArrivalTime).ToList();
+    }
+    public override void validate() {
+      CustomTime time = new CustomTime { minutes = 0, hours = 8 };
+      while (time < _schedule[_schedule.Count - 1].ArrivalTime) {
+        var temp = _schedule.FindAll(x => x.ArrivalTime <= time && x.ArrivalTime + _haltTime > time);
+        time = time + 1;
+        if(temp.Count > 1) {
+          throw new Exception("Station validate error");
+        }
+      }
     }
   }
 }

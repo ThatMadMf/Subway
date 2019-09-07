@@ -23,5 +23,6 @@ namespace Subway.Classes {
     }
 
     abstract public void makeSchedule<T>(List<T> types) where T : class;
+    abstract public void validate();
   }
 }

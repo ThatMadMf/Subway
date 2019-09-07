@@ -46,7 +46,7 @@ namespace Subway {
         };
         TextBox textBox3 = new TextBox {
           Location = new Point(555, 30 + (i + 1) * 30),
-          Text = (0 + (i + 1) * 5).ToString(),
+          Text = (0 + (i + 1) * 10).ToString(),
           Name = "trainTimeM" + i,
           Height = 20,
           Width = 50
@@ -59,12 +59,15 @@ namespace Subway {
 
 
     private void start_Click(object sender, EventArgs e) {
-      //try {
+      try {
         List<Train> trains = new List<Train>();
         List<Station> stations = new List<Station>();
         for (int i = 0; i < 9; i++) {
           string name = this.Controls.Find($"stationName{i}", false)[0].Text;
           string dist = this.Controls.Find($"stationDistance{i}", false)[0].Text;
+          if (Convert.ToInt32(dist) == 0) {
+            throw new Exception("Distance to station cannot be a zero");
+          }
           string halt = this.Controls.Find($"stationHalt{i}", false)[0].Text;
           stations.Add(new Station(name, Convert.ToInt32(dist), Convert.ToInt32(halt)));
         }
@@ -74,13 +77,14 @@ namespace Subway {
           string m = this.Controls.Find($"trainTImeM{i}", false)[0].Text;
           trains.Add(new Train(Convert.ToInt32(num), Convert.ToInt32(h), Convert.ToInt32(m)));
         }
+        SubwayState subway = new SubwayState(8, 0, trains, stations);
         var handler = SubwayEvent;
         if (handler != null) {
-          handler(this, new SubwayState(8, 0, trains, stations));
+          handler(this, subway);
         }
-      //} catch (Exception ex) {
-      //  MessageBox.Show(ex.Message);
-      //}
+      } catch (Exception ex) {
+        MessageBox.Show(ex.Message);
+      }
 
 
     }

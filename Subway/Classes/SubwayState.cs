@@ -30,6 +30,18 @@ namespace Subway.Classes {
       _trains = trains;
       _stations = stations;
       _globalSchedule = new List<List<State>>(3);
+      foreach (var train in _trains) {
+        train.makeSchedule(_stations);
+      }
+      foreach (var station in _stations) {
+        station.makeSchedule(_trains);
+      }
+      foreach (var s in _stations) {
+        s.validate();
+      }
+      foreach (var t in _trains) {
+        t.validate();
+      }
     }
 
     public void Next(SubwayField subwayField) {

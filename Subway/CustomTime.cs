@@ -46,6 +46,16 @@ namespace Subway {
         return new CustomTime { hours = time.hours + 1, minutes = time.minutes + m - 60 };
       }
     }
+
+    public static bool operator == (CustomTime time1, CustomTime time2) {
+      if(time1.hours == time2.hours && time1.minutes == time2.minutes) {
+        return true;
+      }
+      return false;
+    }
+    public static bool operator != (CustomTime time1, CustomTime time2) {
+      return !(time1 == time2);
+    }
       
 
     public override string ToString() {

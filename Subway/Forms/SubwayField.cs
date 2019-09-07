@@ -38,12 +38,6 @@ namespace Subway.Forms {
     private void SettingsUserControl_SubwayEvent(object sender, object e) {
       panel1.Controls.Clear();
       subway = e as SubwayState;
-      foreach(var train in subway.Trains) {
-        train.makeSchedule(subway.Stations);
-      }
-      foreach (var station in subway.Stations) {
-        station.makeSchedule(subway.Trains);
-      }
       Console.Write(subway.Stations[0].Schedule);
       scheduleUserControl = new ScheduleUserControl(subway.Stations);
       panel1.Controls.Add(scheduleUserControl);
