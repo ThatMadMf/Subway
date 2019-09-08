@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Subway.Classes.Schedule">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAEAAAAAAAAAABAAAAAAAAABA=</HashCode>
+      <FileName>Classes\Schedule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Subway.Classes.State">
+    <Position X="4.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAgAAAAAAAAAAgAFAAACAAAAAAAAQAAAAIBACAAAAA=</HashCode>
+      <FileName>Classes\State.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Subway.Classes.Station">
+    <Position X="2.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIIAAAAAQAAAkAAAAAAQAAGAAAAAABgAAAAAAAAA=</HashCode>
+      <FileName>Classes\Station.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Subway.Classes.SubwayState">
+    <Position X="6.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAgAAgAAAAAAAAAAAAAAABAAQAAAAAAAQABgAAAAAA=</HashCode>
+      <FileName>Classes\SubwayState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Subway.Classes.SubwayUnit">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAEAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\SubwayUnit.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Subway.Classes.Train">
+    <Position X="0.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAJAAIEAAAAAEAEEAAAAAAEAAAAAABAAAAABAAAA=</HashCode>
+      <FileName>Classes\Train.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Subway.CustomTime">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAABAAAQEQAGAAgAAAAAAAAAAAAAAAAAAByA=</HashCode>
+      <FileName>CustomTime.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -17,6 +17,7 @@ namespace Subway {
     }
 
     public void render(List<Station> stations, CustomTime currentTime) {
+      dataGridView1.Columns.Clear();
       dataGridView1.ColumnCount = 10;
       dataGridView1.RowCount = 9;
       dataGridView1.RowHeadersWidth = 150;
