@@ -17,6 +17,7 @@ namespace Subway {
       InitializeComponent();
       dataGridView1.ColumnCount = stations[0].Schedule.Count;
       dataGridView1.RowCount = 9;
+      dataGridView1.RowHeadersWidth = 150;
       for (int i = 0; i < stations.Count; i++) {
         var s = stations[i].Schedule;
         dataGridView1.Rows[i].HeaderCell.Value = stations[i].Name;

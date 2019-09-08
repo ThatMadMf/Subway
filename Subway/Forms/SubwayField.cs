@@ -17,9 +17,11 @@ namespace Subway.Forms {
     bool _setting;
     bool _schedule;
     bool _live;
+    bool _pause;
     SettingsUserControl settingsUserControl;
     ScheduleUserControl scheduleUserControl;
     SubwayUserControl subwayUserControl;
+    ManualResetEvent manual;
 
     public SubwayField() {
       InitializeComponent();
@@ -27,6 +29,8 @@ namespace Subway.Forms {
       List<Train> trains = new List<Train>();
       _schedule = false;
       _live = false;
+      manual = new ManualResetEvent(true);
+      _pause = false;
 
       settingsUserControl = new SettingsUserControl();
       subwayUserControl = new SubwayUserControl();
@@ -42,13 +46,19 @@ namespace Subway.Forms {
       scheduleUserControl = new ScheduleUserControl(subway.Stations);
       panel1.Controls.Add(scheduleUserControl);
       _schedule = true;
+      manual = new ManualResetEvent(true);
+      pause.Text = "Pause";
+      _pause = false;
+      _setting = false;
       Thread thread = new Thread(() => Call(subwayUserControl));
       thread.Start();
-      _setting = false;
     }
 
     void Call(SubwayUserControl control) {
-      while (subway.CurrentTime.hours != 7) {
+      Station lastStation = subway.Stations[subway.Stations.Count - 1];
+      CustomTime lastTime = lastStation.Schedule[lastStation.Schedule.Count - 1].ArrivalTime;
+      while (subway.CurrentTime <= lastTime + lastStation.HaltTime && _setting != true) {
+        manual.WaitOne();
         subway.Next(this);
         if (_live) {
           if (panel1.InvokeRequired) {
@@ -93,6 +103,26 @@ namespace Subway.Forms {
       //if(scheduleUserControl != null) {
       //  scheduleUserControl.Size = panel1.Size;
       //}
+    }
+
+    private void pause_Click(object sender, EventArgs e) {
+      if(!_setting) {
+        if(_pause == false) {
+          manual.Reset();
+          _pause = true;
+          pause.Text = "Resume";
+        } else {
+          manual.Set();
+          _pause = false;
+          pause.Text = "Pause";
+        }
+      }
+    }
+
+    private void button2_Click(object sender, EventArgs e) {
+      panel1.Controls.Clear();
+      panel1.Controls.Add(settingsUserControl);
+      _setting = true;
     }
   }
 }
