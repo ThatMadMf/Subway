@@ -14,13 +14,10 @@ namespace Subway.Classes {
     CustomTime _currentTime;
     List<Train> _trains;
     List<Station> _stations;
-    List<List<State>> _globalSchedule;
 
     public List<Station> Stations => _stations;
     public List<Train> Trains => _trains;
     public CustomTime CurrentTime => _currentTime;
-    public List<List<State>> GlobalSchedule => _globalSchedule;
-    public SubwayState GetIt => this;
 
     public SubwayState(int h, int m, List<Train> trains, List<Station> stations) {
       _currentTime = new CustomTime {
@@ -29,7 +26,7 @@ namespace Subway.Classes {
       };
       _trains = trains;
       _stations = stations;
-      _globalSchedule = new List<List<State>>(3);
+      checkNames();
       foreach (var train in _trains) {
         train.makeSchedule(_stations);
       }
@@ -45,7 +42,7 @@ namespace Subway.Classes {
     }
 
     public void Next(SubwayField subwayField) {
-      _currentTime = ChangeTime(_currentTime);
+      _currentTime = _currentTime + 1;
       setLabel(subwayField);
     }
 
@@ -59,42 +56,21 @@ namespace Subway.Classes {
       }
     }
 
-    public Label setSingleLabel(Label label, Train train) {
-      try {
-        label.Invoke(new Action(() => {
-          label.Text = getState(train);
-        }));
-      } catch (Exception e) {
-        Console.Write(e.Message);
-      }
-      return label;
-    }
-
-
-    public string getState(Train train) {
-      int index = _globalSchedule.IndexOf(_globalSchedule.Find(x => x[0].Train.Number == train.Number));
-      var v = _globalSchedule[index].Find(x => x.From <= _currentTime && x.UpTo >= _currentTime);
-      if (v != null) {
-        string state = v.StringState == "ontheway" ? "On the way to " : v.StringState;
-        return  state + " " + v.Station.Name;
-      } else {
-        return "Train is not on the way yet";
-      }
-    }
-
-    public CustomTime ChangeTime(CustomTime time) {
-      if (time.minutes + 1 < 60) {
-        time.minutes++;
-      } else {
-        if (time.hours + 1 < 24) {
-          time.hours++;
-          time.minutes = 0;
-        } else {
-          time.hours = 0;
-          time.minutes = 0;
+    void checkNames() {
+      for(int i = 0; i < _trains.Count - 1; i++) {
+        for(int j = i + 1; j < Trains.Count; j++) {
+          if(_trains[i].Number == _trains[j].Number) {
+            throw new Exception("Train's number error");
+          }
         }
       }
-      return time;
+      for (int i = 0; i < _stations.Count - 1; i++) {
+        for (int j = i + 1; j < _stations.Count; j++) {
+          if (_stations[i].Name == _stations[j].Name) {
+            throw new Exception("Station's name error");
+          }
+        }
+      }
     }
   }
 }

@@ -11,7 +11,6 @@ using Subway.Classes;
 
 namespace Subway {
   partial class ScheduleUserControl : UserControl {
-    List<List<State>> states;
 
     public ScheduleUserControl(List<Station>stations) {
       InitializeComponent();

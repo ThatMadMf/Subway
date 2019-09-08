@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace Subway {
   public struct CustomTime : IComparable<CustomTime> {
+
     public int hours;
     public int minutes;
+
+    public CustomTime(int h, int m) {
+      hours = h;
+      minutes = m;
+    }
 
     public int CompareTo (CustomTime time) {
       if((hours * 60 + minutes) > (time.hours*60 + time.minutes)) {

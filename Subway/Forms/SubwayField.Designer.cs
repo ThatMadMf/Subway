@@ -69,7 +69,7 @@
       this.schedule.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.schedule.Location = new System.Drawing.Point(7, 425);
       this.schedule.Name = "schedule";
-      this.schedule.Size = new System.Drawing.Size(93, 35);
+      this.schedule.Size = new System.Drawing.Size(93, 36);
       this.schedule.TabIndex = 8;
       this.schedule.Text = "Schedule";
       this.schedule.UseVisualStyleBackColor = true;
@@ -80,7 +80,7 @@
       this.live.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.live.Location = new System.Drawing.Point(106, 425);
       this.live.Name = "live";
-      this.live.Size = new System.Drawing.Size(77, 35);
+      this.live.Size = new System.Drawing.Size(77, 36);
       this.live.TabIndex = 9;
       this.live.Text = "Live";
       this.live.UseVisualStyleBackColor = true;
@@ -101,9 +101,9 @@
       // button2
       // 
       this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-      this.button2.Location = new System.Drawing.Point(189, 427);
+      this.button2.Location = new System.Drawing.Point(189, 425);
       this.button2.Name = "button2";
-      this.button2.Size = new System.Drawing.Size(112, 33);
+      this.button2.Size = new System.Drawing.Size(112, 36);
       this.button2.TabIndex = 11;
       this.button2.Text = "New Subway";
       this.button2.UseVisualStyleBackColor = true;
